@@ -1,0 +1,372 @@
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+void modulo_pessoal();
+void modulo_financeiro();
+void modulo_academico();
+void modulo_utilidades();
+
+int main() {
+    char usuario[20];
+    char senha[20];
+    int validacao = 0;
+    int tentativas = 0;
+    int max_tentativas = 3;
+    int opcao;
+
+    
+    printf("=== SISTEMA DE CADASTRO E LOGIN ===\n");
+    printf("Digite o usuario: ");
+    scanf("%s", usuario);
+
+    while (validacao == 0 && tentativas < max_tentativas) {
+        printf("Digite a senha: ");
+        scanf("%s", senha);
+        tentativas++;
+        system ("cls");
+        if (strlen(senha) < 6) {
+            printf("Senha fraca! Use pelo menos 6 caracteres.\n");    
+        }
+        else if (strcmp(senha, "123456") == 0) {
+            printf("Senha invalida! Tente novamente.\n");
+        } 
+        else {
+            printf("===== LOGIN VALIDO! BEM-VINDO %s =====\n", usuario);
+            validacao = 1; 
+            break;
+        }
+        
+        if (tentativas < max_tentativas) {
+            printf("Tentativas restantes: %d\n", max_tentativas - tentativas);
+        }
+    }
+
+    if (validacao == 0) {
+        printf("Numero maximo de tentativas excedido!\n");
+        return 0;  
+    }
+
+do {
+    printf("========= MENU PRINCIPAL =========\n");
+    printf("1 - PESSOAL\n");
+    printf("2 - FINANCEIRO\n");
+    printf("3 - ACADEMICO\n");
+    printf("4 - UTILIDADES\n");
+    printf("0 - SAIR\n");
+    printf("Escolha uma opcao: ");
+    scanf("%d", &opcao);
+    system ("cls");
+    switch(opcao){
+        case 0:
+            printf("Saindo do sistema...\n");
+            break;
+        case 1:
+            modulo_pessoal();
+            break;
+        case 2:
+            modulo_financeiro();
+            break;
+        case 3:
+            modulo_academico();
+            break;
+        case 4: 
+            modulo_utilidades();
+            break;
+        default:
+            printf("Opcao invalida! Tente novamente.\n");
+            break;
+    }
+} while (opcao != 0);
+
+    return 0;
+}
+
+void modulo_pessoal(){
+    int mod_opcao;
+
+    do {
+        printf("===== MODULO PESSOAL =====\n");
+        printf("1 - CLASSIFICACAO DE IDADE\n");
+        printf("2 - CALCULADORA DE IMC\n");
+        printf("0 - VOLTAR AO MENU PRINCIPAL\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &mod_opcao); 
+
+        system ("cls");
+
+        switch(mod_opcao){
+            case 0:
+                printf("Voltando ao menu principal...\n");
+                break;
+            case 1:
+                {
+                    int idade;
+                    printf("------ CLASSIFICACAO DE IDADE ------\n");
+                    printf("Digite sua idade: ");
+                    scanf("%d", &idade);
+
+                    system("cls");
+
+                    if (idade < 16){
+                        printf("MENOR DE IDADE | NAO ELEITOR\n");
+                    } else if (idade >= 16 && idade < 18){
+                        printf("%d ANOS | VOTO OPCIONAL\n", idade);
+                    } else if (idade >= 18 && idade < 65){
+                        printf("ADULTO MAIOR DE IDADE | VOTO OBRIGATORIO\n");
+                    } else {
+                        printf("IDOSO | VOTO OPCIONAL\n");
+                    }
+                    break;
+                }
+            case 2: 
+                {
+                    float peso, altura, imc;
+                    int validacao = 0;
+                    int tentativas = 0;
+                    int max_tentativas = 3;
+
+                    while (validacao == 0 && tentativas < max_tentativas) {
+                        printf("------ CALCULADORA DE IMC ------\n");
+                        printf("Digite seu peso (kg): ");
+                        scanf("%f", &peso);
+                        printf("Digite sua altura (m): ");
+                        scanf("%f", &altura);
+                        tentativas++;
+                        system("cls"); 
+
+                        if (peso <= 0 || altura <= 0) {
+                            printf("Valor invalido! informe novamente seu peso e altura.\n");
+                        } else {
+                            imc = peso / (altura * altura);
+                            printf("Seu IMC eh: %.2f\n", imc);
+                            validacao = 1; 
+                        }
+                    }
+                    break;
+                }
+                default:
+                    printf("Opcao invalida! Tente novamente.\n");
+                    break;
+        }
+    } while (mod_opcao != 0);
+}
+
+void modulo_financeiro(){
+    int opcao;
+    
+    do {
+        printf("===== MODULO FINANCEIRO =====\n");
+        printf("1- CALCULAR QUANTO RECEBERA EM 12 MESES\n");
+        printf("2- CALCULAR SALARIO DO PERIODO TRABALHADO\n");
+        printf("3- CONVERSOR DE MOEDAS\n");
+        printf("0- VOLTAR AO MENU PRINCIPAL\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao); 
+        system("cls");
+
+        switch (opcao) {
+        case 1: {
+            float salario, salario_anual;
+            printf("CALCULANDO QUANTO RECEBERA EM 12 MESES...\n");
+            printf("INFORME SEU SALARIO MENSAL: ");
+            scanf("%f", &salario);
+            
+            salario_anual = salario * 12;
+            system("cls");
+            printf("VOCE RECEBERA EM 12 MESES: R$ %.2f\n\n", salario_anual);
+            break;
+        }
+        
+        case 2: {
+            float diaria, total;
+            int dias;
+            printf("CALCULANDO SALARIO DO PERIODO TRABALHADO...\n");
+            printf("INFORME SUA DIARIA: ");
+            scanf("%f", &diaria);
+            printf("INFORME OS DIAS TRABALHADOS: ");
+            scanf("%d", &dias);
+            
+            total = dias * diaria;
+            system("cls");
+            printf("O TOTAL GANHO EM %d DIAS TRABALHADOS: R$ %.2f\n\n", dias, total);
+            break;
+        }
+
+        case 3: {
+            float real, euro, dolar;
+            printf("=====CONVERSOR DE MOEDAS=====\n");
+            printf("VALOR EM REAIS: ");
+            scanf("%f", &real);
+            
+            euro = real / 6.20;
+            dolar = real / 5.30;
+            system("cls");
+
+            printf("VALOR EM REAIS: R$ %.2f\n", real);
+            printf("VALOR EM EURO: %.2f\n", euro);
+            printf("VALOR EM DOLAR: $ %.2f\n\n", dolar);
+            break;
+        }
+        
+        case 0:
+            printf("Voltando ao menu principal...\n");
+            break;
+            
+        default:
+            printf("Opcao invalida.\n\n");
+            break;
+        }
+    } while (opcao != 0);
+}
+
+void modulo_academico(){
+    float n1, n2, n3;
+    float soma, media, dobro_media;
+
+    printf("=====SITUACAO ACADEMICA:=====\n");
+    printf("Informe sua nota da primeira prova: ");
+    scanf("%f", &n1);
+    printf("Informe sua nota da segunda prova: ");
+    scanf("%f", &n2);
+    printf("Informe sua nota da terceira prova: ");
+    scanf("%f", &n3);
+
+    system("cls");
+
+    soma = n1 + n2 + n3;
+    media = soma / 3;
+    dobro_media = media * 2;
+
+    printf ("SOMA DAS NOTAS: %.2f\n", soma);
+    printf("MEDIA TOTAL DAS NOTAS: %.2f\n", media);
+    printf("O DOBRO DA MEDIA DAS NOTAS: %.2f\n", dobro_media);
+
+    if (media >= 7.0)
+    {
+        printf("SITUACAO: APROVADO ");
+    } else if (media >= 5.0 && media < 7.0)
+    {
+        printf("SITUACAO: RECUPERAcAO ");
+    } else{
+        printf("SITUACAO: REPROVADO ");
+    }
+}
+
+void modulo_utilidades(){
+    int opcao;
+
+    do
+    {
+        printf("===== UTILIDADES =====\n");
+        printf("1 - PAR OU IMPAR E INTERVALO\n");
+        printf("2 - CALCULAR AREA E PERIMETRO\n");
+        printf("3 - CONVERTER SEGUNDOS\n");
+        printf("0 - VOLTAR\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+        system("cls");
+
+        switch (opcao)
+        {
+        case 0:
+            printf("Voltando ao menu principal...\n");
+            break;
+
+        case 1:
+            {
+                int numero;
+                printf("===== PAR OU IMPAR E INTERVALO =====\n");
+                printf("Digite um numero inteiro: ");
+                scanf("%d", &numero);
+                system("cls");
+
+                if (numero % 2 == 0) {
+                    printf("O numero %d eh PAR.\n", numero);
+                } else {
+                    printf("O numero %d eh IMPAR.\n", numero);
+                }
+
+                if (numero >= 10 && numero <= 50)
+                {
+                    printf("O numero %d esta no intervalo de 10 a 50.\n", numero);
+                } else {
+                    printf("O numero %d nao esta no intervalo de 10 a 50.\n", numero);
+                }
+            }
+                break;
+        case 2:
+            { 
+                int calcular;
+
+                printf("===== CALCULAR AREA E PERIMETRO =====\n");
+                printf("1- CALCULAR CIRCULO");
+                printf("2- CALCULAR RETANGULO");
+                scanf("%d", &calcular);
+                system("cls");
+
+                switch (calcular)
+                {
+                case 1: {
+                float raio, area, perimetro;
+                    printf("-- CALCULAR CIRCULO --\n");
+                    printf("Informe o raio do circulo: ");
+                    scanf("%f", &raio);
+                    system("cls");
+                    area = 3.14 * raio * raio;
+                    perimetro = 2 * 3.14 * raio;
+
+                    printf("AREA DO CIRCULO: %.2f\n", area);
+                    printf("PERIMETRO DO CIRCULO: %.2f\n", perimetro); 
+                    break;}
+                    
+                case 2:
+                    {
+                    float base, altura, area, perimetro;
+                        printf("-- CALCULAR RETANGULO --\n");
+                        printf("Informe a base do retangulo: ");
+                        scanf("%f", &base);
+                        printf("Informe a altura do retangulo: ");
+                        scanf("%f", &altura);
+                        system("cls");
+
+                        area = base * altura;
+                        perimetro = 2 * (base + altura);
+
+                        printf("AREA DO RETANGULO: %.2f\n", area);
+                        printf("PERIMETRO DO RETANGULO: %.2f\n", perimetro);
+                        break;
+                    }
+                
+                default:
+                    printf("Opcao invalida! Tente novamente.\n");
+                    break;
+                }
+                break;
+            }
+        case 3:
+            {
+                int segundos, horas, minutos, seg_restantes;
+                printf("===== CONVERTER SEGUNDOS =====\n");
+                printf("Informe o tempo em segundos: ");
+                scanf("%d", &segundos);
+                system("cls");
+
+                horas = segundos / 3600;
+                minutos = (segundos % 3600) / 60;
+                seg_restantes = segundos % 60;
+
+                printf("%d segundos equivalem a %d HORAS, %d MINUTOS e %d SEGUNDOS.\n", segundos, horas, minutos, seg_restantes);
+
+                break;
+            }
+        
+        
+        default:
+            printf("Opcao invalida! Tente novamente.\n");
+            break;
+        }
+
+
+    } while (opcao != 0);
+}
